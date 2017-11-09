@@ -12,8 +12,21 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount () {
+    $.ajax({
+      method: 'GET',
+      url: '/repos',
+      contentType: 'application/json'
+    })
+    .done(res => {
+      console.log('RESULTS BABY', Array.isArray(JSON.parse(res)))
+      this.setState({
+        repos: JSON.parse(res)
+      });
+    });
+  }
+
   search (term) {
-    // getReposByUsername(term);
     $.ajax({
       method: 'POST',
       url: '/repos',
@@ -21,14 +34,12 @@ class App extends React.Component {
       data: JSON.stringify({term})
     })
     .done(res => {
-      console.log('Results', res);
+      // console.log('Results', res);
     })
     .fail(err => {
       console.log('Error: ', err);
     })
     console.log(`${term} was searched`);
-    // TODO
-
   }
 
   render () {

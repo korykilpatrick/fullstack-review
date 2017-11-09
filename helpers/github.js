@@ -1,6 +1,5 @@
 const request = require('request');
 const config = require('../config.js');
-// const $ = require('jquery');
 
 let getReposByUsername = (username, callback) => {
   // The options object has been provided to help you out, 
