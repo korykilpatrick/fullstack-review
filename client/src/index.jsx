@@ -8,7 +8,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      repos: []
+      repos: [],
+      count: 0
     }
   }
 
@@ -19,9 +20,9 @@ class App extends React.Component {
       contentType: 'application/json'
     })
     .done(res => {
-      console.log('RESULTS BABY', Array.isArray(JSON.parse(res)))
       this.setState({
-        repos: JSON.parse(res)
+        repos: res.repos,
+        count: res.count
       });
     });
   }
@@ -34,7 +35,7 @@ class App extends React.Component {
       data: JSON.stringify({term})
     })
     .done(res => {
-      // console.log('Results', res);
+      this.componentDidMount();
     })
     .fail(err => {
       console.log('Error: ', err);
@@ -45,7 +46,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos} count={this.state.count} />
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }

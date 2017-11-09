@@ -17,7 +17,6 @@ let getReposByUsername = (username, callback) => {
     if (err) {
       console.log('ERROR: ', err);
     }
-    console.log('USER DATA-->', data);
     callback(data);
   });
 }
