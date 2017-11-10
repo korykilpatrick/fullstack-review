@@ -14,10 +14,13 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    $.ajax({
+    this.getRepos();
+  }
+
+  getRepos () {
+     $.ajax({
       method: 'GET',
       url: '/repos',
-      contentType: 'application/json'
     })
     .done(res => {
       this.setState({
@@ -35,7 +38,7 @@ class App extends React.Component {
       data: JSON.stringify({term})
     })
     .done(res => {
-      this.componentDidMount();
+      this.getRepos();
     })
     .fail(err => {
       console.log('Error: ', err);
@@ -46,8 +49,8 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos} count={this.state.count} />
       <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos} count={this.state.count} />
     </div>)
   }
 }

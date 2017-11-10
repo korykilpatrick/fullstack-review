@@ -8,48 +8,45 @@ let repoSchema = mongoose.Schema({
   repoId: Number,
   ownerUrl: String,
   repoUrl: String,
+  avatarUrl: String,
   forks: Number
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repoList) => {
-  if (repoList.length) {
-    let saveRepos = [];
-    repoList.forEach(repo => {
-      let newRepo = new Repo({
-        username: repo.owner.login,
-        repoName: repo.name,
-        repoId: repo.id,
-        ownerUrl: repo.owner.html_url,
-        repoUrl: repo.html_url,
-        forks: repo.forks_count
-      });
-      saveRepos.push(newRepo.save());
-    })
-    return Promise.all(saveRepos)
-  }
+  return Promise.all(repoList.map(repo => {
+    let newRepo = new Repo({
+      username: repo.owner.login,
+      repoName: repo.name,
+      repoId: repo.id,
+      ownerUrl: repo.owner.html_url,
+      repoUrl: repo.html_url,
+      avatarUrl: repo.owner.avatar_url,
+      forks: repo.forks_count
+    });
+    return newRepo.save();
+  }))
 }
 
-let isInDB = (username, callback) => {
+let isInDB = (username) => (
   Repo.
     find({username: username.toLowerCase()})
-    .exec(callback)
-}
+    .then(res => res.length > 0)
+)
 
-let getRepoCount = (callback) => {
+let getRepoCount = () => (
   Repo. 
-    find().
-    exec(callback);
-}
+    find()
+    .then(res => res.length)
+)
 
-let getTop25Repos = (callback) => {
+let getTop25Repos = () => (
   Repo.
     find().
     sort({forks: -1}).
-    limit(25).
-    exec(callback);
-}
+    limit(25)
+)
 
 module.exports.save = save;
 module.exports.getTop25Repos = getTop25Repos;

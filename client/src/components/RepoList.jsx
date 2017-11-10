@@ -2,8 +2,10 @@ import React from 'react';
 import RepoListEntry from './RepoListEntry.jsx';
 
 const RepoList = (props) => (
+  
+
   <div>
-    <h4> Repo List Component </h4>
+    <h4> Repo List </h4>
     {function() {
     	if (props.count === 0) {
     		return <p>Our database is empty</p>

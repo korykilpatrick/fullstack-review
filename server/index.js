@@ -10,38 +10,22 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
   let username = req.body.term;
-  // and get the repo information from the github API, then
-  db.isInDB(username, (err, repos) => {
-  	if (err) {
-  		console.error('Error searching for ', username, 'in the database: ', err)
-  	}
-  	if (repos.length) {
-			res.status(201).send(username + ' is already in our database!')
-		} else {
-		  github.getReposByUsername(username, (repoList) => {
-		  // save the repo information in the database
-		  	db.save(JSON.parse(repoList))
-          .then(() => {
-            res.sendStatus(201);
-		  	});
-		  });
-		}
-  })
+  db.isInDB(username)
+    .then(bool => { if (bool) throw new Error(422)
+      return github.getReposByUsername(username) })
+    .then(repoList => { if (!repoList.length) throw new Error(404)
+      return db.save(JSON.parse(repoList))})
+    .then(() => res.sendStatus(201))
+    .catch(err => res.sendStatus(err.message))
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-  let count = 0;
-  db.getRepoCount((err, repos) => {
-  	count = repos.length;
-	  db.getTop25Repos((err, repos) => {
-	  	res.json({repos: repos, count: count});
-	  });
-  })
+  db.getRepoCount()
+    .then(count => {
+      db.getTop25Repos()
+      .then(repos => res.json({repos: repos, count: count}));
+    })
 });
 
 let port = 1128;
