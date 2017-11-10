@@ -2,8 +2,6 @@ import React from 'react';
 import RepoListEntry from './RepoListEntry.jsx';
 
 const RepoList = (props) => (
-  
-
   <div>
     <h4> Repo List </h4>
     {function() {
@@ -17,7 +15,7 @@ const RepoList = (props) => (
     }()}
     <ul> 
     	{props.repos.map(repo => 
-    		<RepoListEntry repo={repo}/> 
+    		<RepoListEntry repo={repo} key={repo.repoUrl}/> 
     	)}
     </ul>
   </div>

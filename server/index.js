@@ -24,7 +24,7 @@ app.get('/repos', function (req, res) {
   db.getRepoCount()
     .then(count => {
       db.getTop25Repos()
-      .then(repos => res.json({repos: repos, count: count}));
+      .then(repos => res.json({repos: repos, count: count}))
     })
 });
 

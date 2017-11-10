@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const forEP = require('foreach-promise');
 mongoose.connect('mongodb://localhost/fetcher');
 
 let repoSchema = mongoose.Schema({

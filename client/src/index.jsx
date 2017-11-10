@@ -37,12 +37,8 @@ class App extends React.Component {
       contentType: 'application/json',
       data: JSON.stringify({term})
     })
-    .done(res => {
-      this.getRepos();
-    })
-    .fail(err => {
-      console.log('Error: ', err);
-    })
+    .done(res => this.getRepos())
+    .fail(err => console.log('Error: ', err))
     console.log(`${term} was searched`);
   }
 

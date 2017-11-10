@@ -11,10 +11,7 @@ let getReposByUsername = (username, callback) => {
   };
   return new Promise((resolve, reject) => {
     request.get(options, (err, res, data) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(data);
+      err ? reject(err) : resolve(data)
     });
   })
 }
