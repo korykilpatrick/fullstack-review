@@ -13,7 +13,7 @@ const RepoListEntry = (props) => (
   	 	<a href={props.repo.repoUrl}>
   	 	{props.repo.repoName} 
   	 	</a> 
-  	 	{'  '} forked {props.repo.forks} times!
+  	 	{'  '} forked {props.repo.forks} times. Or whatever.
   	</div>
   </div>
 )

@@ -8,11 +8,11 @@ const RepoList = (props) => (
     <h4> Repo List </h4>
     {function() {
     	if (props.count === 0) {
-    		return <p>Our database is empty</p>
+    		return <p>Stop reading this and add some fucking repos. Or whatever.</p>
     	} else if (props.count < 25) {
-    		return <p>Heres out who got forked the hardest in our database</p>
+    		return <p>Heres out who got forked the hardest in our database. Or whatever.</p>
     	} else {
-    		return <p>Of the {props.count} repos in our database, here are the 25 most forked!</p>
+    		return <p>Of the {props.count} repos in our database, or whatever, here are the 25 most forked. Or whatever.</p>
     	}
     }()}
     <ul> 
